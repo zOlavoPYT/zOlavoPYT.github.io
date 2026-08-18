@@ -1,297 +1,943 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Portfolio - Olavo Silva</title>
-        <style>
-            *,
-            *::before,
-            *::after {
-                padding: 0px;
-                margin: 0px;
-                box-sizing: border-box;
-            }
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Olavo Silva — Dev Full-Stack</title>
+<style>
+  :root {
+    --bg: #1f2028;
+    --card: rgb(46, 48, 57);
+    --border: #2a2a3a;
+    --accent: rgb(54, 163, 255);
+    --accent2: #ffd644;;
+    --accent3: #f472b6;
+    --text: #fff;
+    --muted: #a9adc1;
+    --font-display: system-ui;
+  }
 
-            body {
-                background-color: #1f2028;
-                color: white;
-                font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-            .navbar {
-                padding-inline: 5vw;
-                overflow: visible;
-                position: relative;
-                padding-block: calc(0.25rem * 12);
-            }
+  html { scroll-behavior: smooth; }
 
-            .navbar nav {
-                display: flex;
-                margin-inline: auto;
-                container-type: inline-size;
-                overflow: visible;
-                position: relative;
-                gap: calc(0.25rem * 4);
-                align-items: center;
-                max-width: calc(0.25rem * 384);
-            }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-display);
+    overflow-x: hidden;
+  }
 
-            .navbar nav .name {
-                display: flex;
-                align-items: center;
-                min-width: calc(0.25rem * 0);
-                gap: calc(0.25rem * 4);
-                flex-shrink: 0;
-            }
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
 
-            .navbar nav .name a {
-                display: block;
-                position: relative;
-                text-decoration: none !important;
-                white-space: nowrap;
-                --tw-font-weight: 500;
-                font-weight: 500;
-                line-height: calc(2/1.5);
-                flex-shrink: 0;
-            }
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2.5rem;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
 
-            .navbar nav .menu {
-                position: relative;
-                display: flex;
-                min-width: calc(0.25rem * 0);
-                min-height: calc(0.25rem * 14);
-                flex: 1;
-                align-items: center;
-                justify-content: center;
-            }
+  .nav-logo {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: 0.05em;
+  }
 
-            .navbar nav .menu .menu-box {
-                display: flex;
-                flex: none;
-                justify-content: center;
-                overflow: visible;
-            }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
 
-            .navbar nav .menu .menu-box ul {
-                display: flex;
-            }
+  .nav-links a {
+    position: relative;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    transition: 0.2s;
+  }
 
-            .navbar nav .menu .menu-box ul li {
-                padding-block: calc(0.25rem * 2);
-                padding-inline: calc(0.25rem * 5);
-                list-style: none;
-            }
+  .nav-links a:after {
+    content: "";
+    position: absolute;
+    background-color: #a9adc1;
+    height: 2px;
+    width: 0;
+    left: 0;
+    bottom: calc(0.25rem * -2.5);
+    transition: 0.2s;
+  }
 
-            .navbar nav .menu .menu-box ul li a {
-                color: #a9adc1;
-                text-decoration: none !important;
-                white-space: nowrap;
-                font-weight: 500;
-                position: relative;
-                transition: 0.2s;
-            }
+  .nav-links a:hover:after {
+    width: 100%;
+    background-color: white;
+  }
 
-            .navbar nav .menu .menu-box ul li a:after {
-                content: "";
-                position: absolute;
-                background-color: #a9adc1;
-                height: 2px;
-                width: 0;
-                left: 0;
-                bottom: calc(0.25rem * -2.5);
-                transition: 0.2s;
-            }
+  .nav-links a:hover {
+    color: white;
+  }
 
-            .navbar nav .menu .menu-box ul li a:hover:after {
-                width: 100%;
-                background-color: white;
-            }
+  .left-menu {
+    display: flex;
+    min-width: 0;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: end;
+  }
 
-            .navbar nav .menu .menu-box ul li a:hover {
-                color: white;
-            }
+  .left-menu .toggle-btn {
+    position: relative;
+    display: flex;
+    gap: calc(0.25rem * 4);
+    align-items: center;
+  }
+  
+  .left-menu .toggle-btn button {
+    display: inline-flex;
+    padding: calc(0.25rem * 1);
+    border: none;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: calc(0.25rem * 14);
+    height: calc(0.25rem * 14);
+    appearance: button;
+    background-color: transparent;
+    color: white;
+  }
 
-            .left-menu {
-                display: flex;
-                min-width: 0;
-                flex-shrink: 0;
-                align-items: center;
-                justify-content: end;
-            }
+  .left-menu .toggle-btn button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 2px solid #4b4c53;
+    border-radius: 3.40282e38px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
 
-            .left-menu .toggle-btn {
-                position: relative;
-                display: flex;
-                gap: calc(0.25rem * 4);
-                align-items: center;
-            }
-            
-            .left-menu .toggle-btn button {
-                display: inline-flex;
-                padding: calc(0.25rem * 1);
-                border: none;
-                overflow: hidden;
-                justify-content: center;
-                align-items: center;
-                cursor: pointer;
-                width: calc(0.25rem * 14);
-                height: calc(0.25rem * 14);
-                appearance: button;
-                background-color: transparent;
-                color: white;
-            }
+  .left-menu .toggle-btn button::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border: 2px solid white;
+    border-radius: 3.40282e38px;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
 
-            .left-menu .toggle-btn button::before {
-                content: "";
-                position: absolute;
-                inset: 0;
-                border: 2px solid #4b4c53;
-                border-radius: 3.40282e38px;
-                transition: transform 0.3s ease, opacity 0.3s ease;
-            }
+  .left-menu .toggle-btn button:hover::after {
+    opacity: 1;
+    transform: scale(1);
+  }
 
-            .left-menu .toggle-btn button::after {
-                content: "";
-                position: absolute;
-                inset: -6px;
-                border: 2px solid white;
-                border-radius: 3.40282e38px;
-                opacity: 0;
-                transform: scale(0.8);
-                transition: transform 0.3s ease, opacity 0.3s ease;
-            }
+  .left-menu .toggle-btn button .spansvg {
+    position: relative;
+    width: calc(0.25rem * 8);
+    height: calc(0.25rem * 8);
+  }
 
-            .left-menu .toggle-btn button:hover::after {
-                opacity: 1;
-                transform: scale(1);
-            }
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 2.5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
 
-            .left-menu .toggle-btn button .spansvg {
-                position: relative;
-                width: calc(0.25rem * 8);
-                height: calc(0.25rem * 8);
-            }
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(110,231,183,0.08) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    pointer-events: none;
+  }
 
-            .home {
-                overflow-x: hidden;
-                transition-duration: .5s;
-            }
+  .hero-glow2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(129,140,248,0.07) 0%, transparent 70%);
+    bottom: 0; left: -80px;
+    pointer-events: none;
+  }
 
-            header {
-                margin-inline: 10vw;
-                position: relative;
-            }
+  .hero-tag {
+    font-size: 0.78rem;
+    color: var(--accent2);
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.1s forwards;
+  }
 
-            header .block {
-                display: grid;
-                position: relative;
-                padding-top: calc(0.25rem * 24);
-                padding-bottom: calc(0.25rem * 12);
-                column-gap: calc(0.25rem * 6);
-                grid-template-columns: repeat(12,minmax(0,1fr));
-                min-height: 40rem;
-                max-width: var(80rem);
-                height: auto;
-                margin-bottom: calc(0.25rem * 0);
-                margin-inline: auto;
-            }
+  .hero h1 {
+    font-size: 4rem;
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s forwards;
+  }
 
-            header .block h1 {
-                color: white;
-                font-size: 2.5rem;
-            }
+  .hero .name {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
 
-            header .block h2 {
-                color: white;
-                font-size: 2.0rem;
-                line-height: 1.25;
-                font-weight: inherit;
-            }
+  .hero h1 .line2 {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(232,232,240,0.35);
+  }
 
-            header .block p {
-                color: #a9adc1;
-                font-size: 2.0rem;
-                line-height: 1.25;
-                font-weight: inherit;
-            }
+  .hero h1 .accent { color: var(--accent); }
 
-            header .block .image {
-                grid-column-start: 7;
-                grid-column: span 5/span 5;
-                margin-bottom: calc(0.25rem * 0);
-                padding-inline: calc(0.25rem * 10);
-            }
+  .hero-desc {
+    margin-top: 2rem;
+    max-width: 480px;
+    color: var(--muted);
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 1.5;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.35s forwards;
+  }
 
-            header .block .image img {
-                aspect-ratio: 1 / 1;
-                object-fit: contain;
-                width: 100%;
-                max-height: 50vh;
-                height: auto;
-                max-width: 100%;
-                display: block;
-            }
+  .hero-cta {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.5s forwards;
+  }
 
-            header .block .text {
-                display: flex;
-                flex-direction: column;
-                height: 100%;
-                grid-row-start: 1;
-                grid-column-start: 1;
-                grid-column: span 5/span 5;
-                padding-top: calc(0.25rem * 6);
-                gap: 1.0rem;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="home">
-            <div class="navbar">
-                <nav>
-                    <div class="name">
-                        <a><h2>Olavo Silva</h2></a>
-                    </div>
-                    <div class="menu">
-                        <div class="menu-box">
-                            <ul>
-                                <li><a>Home</a></li>
-                                <li><a>Services</a></li>
-                                <li><a>Skills</a></li>
-                                <li><a>Education</a></li>
-                                <li><a>Experience</a></li>
-                                <li><a>Contact</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="left-menu">
-                        <div class="toggle-btn">
-                            <button type="submit">
-                                <div class="spansvg">
-                                    <!--<svg class="w-full" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.228 7.9439C10.5176 8.82869 7.75757 12.1054 7.75757 15.9987C7.75757 20.5716 11.5618 24.2919 16.2367 24.2919C19.2323 24.2919 21.9337 22.7699 23.4514 20.3585C23.2779 20.3676 23.1033 20.3722 22.9287 20.3722C17.7826 20.3722 13.5951 16.2772 13.5951 11.2435C13.5951 10.1032 13.8108 8.98914 14.228 7.9439M16.2367 26.4993C10.3171 26.4993 5.50037 21.7899 5.50037 15.9987C5.50037 10.2109 10.3171 5.49927 16.2367 5.49927C16.6598 5.49927 17.0501 5.72963 17.2435 6.09753C17.438 6.46428 17.4087 6.90668 17.1638 7.24363C16.3059 8.42297 15.8535 9.80631 15.8535 11.2435C15.8535 15.06 19.0272 18.1637 22.9287 18.1637C23.6483 18.1637 24.3573 18.0582 25.0359 17.8531C25.4378 17.7293 25.8785 17.8359 26.1738 18.1304C26.4715 18.425 26.5758 18.8559 26.4446 19.2467C25.0019 23.5847 20.9 26.4993 16.2367 26.4993" fill="currentColor"></path></svg></span><span class="absolute inset-0 transform transition-transform duration-700 motion-reduce:duration-[0s] -rotate-90" style="transform-origin:50% 100px">
-                                    <svg class="w-full" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.0003 21.4194C13.0123 21.4194 10.5813 18.9874 10.5813 15.9994C10.5813 13.0114 13.0123 10.5804 16.0003 10.5804C18.9883 10.5804 21.4193 13.0114 21.4193 15.9994C21.4193 18.9874 18.9883 21.4194 16.0003 21.4194M16.0003 8.64136C11.9423 8.64136 8.64233 11.9414 8.64233 15.9994C8.64233 20.0574 11.9423 23.3574 16.0003 23.3574C20.0573 23.3574 23.3583 20.0574 23.3583 15.9994C23.3583 11.9414 20.0573 8.64136 16.0003 8.64136" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M16.0004 7.08447C16.5364 7.08447 16.9704 6.64946 16.9704 6.11446V3.34546C16.9704 2.81046 16.5364 2.37646 16.0004 2.37646C15.4644 2.37646 15.0304 2.81046 15.0304 3.34546V6.11446C15.0304 6.64946 15.4644 7.08447 16.0004 7.08447" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M6.11559 15.0298H3.34559C2.81059 15.0298 2.37659 15.4648 2.37659 15.9998C2.37659 16.5348 2.81059 16.9688 3.34559 16.9688H6.11559C6.65159 16.9688 7.08459 16.5348 7.08459 15.9998C7.08459 15.4648 6.65159 15.0298 6.11559 15.0298" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M16.0004 24.9146C15.4644 24.9146 15.0304 25.3496 15.0304 25.8846V28.6536C15.0304 29.1886 15.4644 29.6236 16.0004 29.6236C16.5364 29.6236 16.9704 29.1886 16.9704 28.6536V25.8846C16.9704 25.3496 16.5364 24.9146 16.0004 24.9146" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M28.6542 15.0298H25.8842C25.3492 15.0298 24.9152 15.4648 24.9152 15.9998C24.9152 16.5348 25.3492 16.9688 25.8842 16.9688H28.6542C29.1902 16.9688 29.6242 16.5348 29.6242 15.9998C29.6242 15.4648 29.1902 15.0298 28.6542 15.0298" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M22.9896 9.97995C23.2376 9.97995 23.4856 9.88495 23.6756 9.69595L24.7036 8.66795C25.0816 8.28995 25.0816 7.67495 24.7036 7.29595C24.3246 6.91795 23.7106 6.91795 23.3316 7.29595L22.3036 8.32495C21.9256 8.70295 21.9256 9.31695 22.3036 9.69595C22.4926 9.88495 22.7416 9.97995 22.9896 9.97995" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M8.32507 9.69593C8.51407 9.88493 8.76207 9.97993 9.01107 9.97993C9.25907 9.97993 9.50707 9.88493 9.69607 9.69593C10.0751 9.31693 10.0751 8.70293 9.69607 8.32493L8.66807 7.29693C8.28907 6.91893 7.67507 6.91893 7.29707 7.29693C6.91807 7.67493 6.91807 8.28993 7.29707 8.66793L8.32507 9.69593Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M8.32507 22.3043L7.29707 23.3313C6.91807 23.7093 6.91807 24.3243 7.29707 24.7023C7.48607 24.8923 7.73407 24.9873 7.98207 24.9873C8.23007 24.9873 8.47807 24.8923 8.66807 24.7023L9.69607 23.6753C10.0751 23.2973 10.0751 22.6833 9.69607 22.3043C9.31807 21.9253 8.70307 21.9253 8.32507 22.3043" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M23.6752 22.3043C23.2962 21.9253 22.6822 21.9253 22.3032 22.3043C21.9252 22.6833 21.9252 23.2973 22.3042 23.6753L23.3322 24.7023C23.5212 24.8923 23.7692 24.9873 24.0182 24.9873C24.2662 24.9873 24.5142 24.8923 24.7032 24.7023C25.0822 24.3243 25.0822 23.7093 24.7032 23.3313L23.6752 22.3043Z" fill="currentColor"></path></svg></span><span class="absolute inset-0 transform transition-transform duration-700 motion-reduce:duration-[0s] translate-y-10" style="transform-origin:50% 100px">
-                                    --><svg width="32" height="32" fill="none" viewBox="0 0 24 24"><path d="M5.75 5.75a1 1 0 011-1h10.5a1 1 0 011 1v8.5H5.75v-8.5zM18.25 14.5l.746 3.544a1 1 0 01-.979 1.206H5.982a1 1 0 01-.978-1.206L5.75 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-                </nav>
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem 2.75rem;
+    border-radius: 3.40282e38px;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: var(--text);
+    color: black;
+  }
+
+  .btn-outline {
+    color: var(--text);
+    background: transparent;
+  }
+
+  .btn-outline::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 2px solid #4b4c53;
+    border-radius: 3.40282e38px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .btn::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border: 2px solid white;
+    border-radius: 3.40282e38px;
+    opacity: 0;
+    inset: 0px;
+    transition: inset 0.3s ease, opacity 0.3s ease;
+  }
+
+  .btn:hover::after {
+    opacity: 1;
+    inset: -6px;
+  }
+
+  .hero-stats {
+    margin-top: 4rem;
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.65s forwards;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat-num {
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--text);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 2.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-label {
+    font-size: 0.78rem;
+    color: var(--accent2);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin-bottom: 3rem;
+    line-height: 1;
+  }
+
+  /* EXPERIENCE */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+
+  .exp-item {
+    position: relative;
+    margin-bottom: 3rem;
+    padding: 3rem;
+    background: var(--card);
+    border-radius: 0.5rem;
+  }
+
+  .exp-item::after {
+    content: "";
+    position: absolute;
+    border: 2px solid white;
+    border-radius: 0.75rem;
+    opacity: 0;
+    inset: 0px;
+    transition: inset 0.3s ease, opacity 0.3s ease;
+  }
+
+  .exp-item:hover::after {
+    opacity: 1;
+    inset: -6px;
+  }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .exp-role {
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+
+  .exp-year {
+    font-size: 0.75rem;
+    color: var(--text);
+    background: rgb(75, 76, 83);
+    padding: 0.75rem 1.35rem;
+    border-radius: 3.40282e38px;
+    white-space: nowrap;
+  }
+
+  .exp-company {
+    color: var(--muted);
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .exp-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .exp-list li {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.6;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .exp-list li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  .badge-award {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.8rem;
+    font-size: 0.72rem;
+    color: #fcd34d;
+    background: rgba(252,211,77,0.08);
+    border: 1px solid rgba(252,211,77,0.2);
+    padding: 0.25rem 0.7rem;
+    border-radius: 100px;
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .skill-group {
+    position: relative;
+    background: var(--card);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+
+  .skill-group::after {
+    content: "";
+    position: absolute;
+    border: 2px solid var(--text);
+    border-radius: 0.75rem;
+    opacity: 0;
+    inset: 0px;
+    pointer-events: none;
+    transition: inset 0.3s ease, opacity 0.3s ease;
+  }
+
+  .skill-group:hover::after {
+    opacity: 1;
+    inset: -6px;
+  }
+
+  .skill-group-title {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .skill-tag {
+    position: relative;
+    font-size: 0.75rem;
+    color: var(--text);
+    background: rgb(75, 76, 83);
+    padding: 0.25rem 0.6rem;
+    border-radius: 3.40282e38px;
+    transition: all 0.2s;
+  }
+
+  .skill-tag::after {
+    content: "";
+    position: absolute;
+    border: 2px solid var(--accent2);
+    border-radius: 3.40282e38px;
+    opacity: 0;
+    inset: 0px;
+    transition: inset 0.3s ease, opacity 0.3s ease;
+  }
+
+  .skill-tag:hover::after {
+    opacity: 1;
+    inset: -6px;
+  }
+
+  /* CERTS */
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .cert-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cert-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--accent), var(--accent2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .cert-card:hover::after { transform: scaleX(1); }
+  .cert-card:hover { border-color: rgba(110,231,183,0.3); }
+
+  .cert-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .cert-title {
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+
+  .cert-meta {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  /* CONTACT */
+  .contact-section {
+    text-align: center;
+    padding: 6rem 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  /* MOBILE NAV TOGGLE */
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.4rem 0.7rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      background: rgba(10,10,15,0.97);
+      flex-direction: column;
+      padding: 1.5rem;
+      gap: 1.2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-links.open { display: flex; }
+    .left-menu { display: none; }
+    .menu-toggle { display: block; }
+
+    .hero { padding: 7rem 1.5rem 3rem; }
+    section { padding: 4rem 1.5rem; }
+    .hero-stats { gap: 2rem; }
+
+    .timeline { padding-left: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo"><h2>Olavo Silva.</h2></span>
+  <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#experiencia">Experiência</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projetos">Projetos</a></li>
+    <li><a href="#certs">Certs</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <div class="left-menu">
+    <div class="toggle-btn">
+        <button type="submit">
+            <div class="spansvg">
+                <!--<svg class="w-full" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.228 7.9439C10.5176 8.82869 7.75757 12.1054 7.75757 15.9987C7.75757 20.5716 11.5618 24.2919 16.2367 24.2919C19.2323 24.2919 21.9337 22.7699 23.4514 20.3585C23.2779 20.3676 23.1033 20.3722 22.9287 20.3722C17.7826 20.3722 13.5951 16.2772 13.5951 11.2435C13.5951 10.1032 13.8108 8.98914 14.228 7.9439M16.2367 26.4993C10.3171 26.4993 5.50037 21.7899 5.50037 15.9987C5.50037 10.2109 10.3171 5.49927 16.2367 5.49927C16.6598 5.49927 17.0501 5.72963 17.2435 6.09753C17.438 6.46428 17.4087 6.90668 17.1638 7.24363C16.3059 8.42297 15.8535 9.80631 15.8535 11.2435C15.8535 15.06 19.0272 18.1637 22.9287 18.1637C23.6483 18.1637 24.3573 18.0582 25.0359 17.8531C25.4378 17.7293 25.8785 17.8359 26.1738 18.1304C26.4715 18.425 26.5758 18.8559 26.4446 19.2467C25.0019 23.5847 20.9 26.4993 16.2367 26.4993" fill="currentColor"></path></svg></span><span class="absolute inset-0 transform transition-transform duration-700 motion-reduce:duration-[0s] -rotate-90" style="transform-origin:50% 100px">
+                <svg class="w-full" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.0003 21.4194C13.0123 21.4194 10.5813 18.9874 10.5813 15.9994C10.5813 13.0114 13.0123 10.5804 16.0003 10.5804C18.9883 10.5804 21.4193 13.0114 21.4193 15.9994C21.4193 18.9874 18.9883 21.4194 16.0003 21.4194M16.0003 8.64136C11.9423 8.64136 8.64233 11.9414 8.64233 15.9994C8.64233 20.0574 11.9423 23.3574 16.0003 23.3574C20.0573 23.3574 23.3583 20.0574 23.3583 15.9994C23.3583 11.9414 20.0573 8.64136 16.0003 8.64136" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M16.0004 7.08447C16.5364 7.08447 16.9704 6.64946 16.9704 6.11446V3.34546C16.9704 2.81046 16.5364 2.37646 16.0004 2.37646C15.4644 2.37646 15.0304 2.81046 15.0304 3.34546V6.11446C15.0304 6.64946 15.4644 7.08447 16.0004 7.08447" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M6.11559 15.0298H3.34559C2.81059 15.0298 2.37659 15.4648 2.37659 15.9998C2.37659 16.5348 2.81059 16.9688 3.34559 16.9688H6.11559C6.65159 16.9688 7.08459 16.5348 7.08459 15.9998C7.08459 15.4648 6.65159 15.0298 6.11559 15.0298" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M16.0004 24.9146C15.4644 24.9146 15.0304 25.3496 15.0304 25.8846V28.6536C15.0304 29.1886 15.4644 29.6236 16.0004 29.6236C16.5364 29.6236 16.9704 29.1886 16.9704 28.6536V25.8846C16.9704 25.3496 16.5364 24.9146 16.0004 24.9146" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M28.6542 15.0298H25.8842C25.3492 15.0298 24.9152 15.4648 24.9152 15.9998C24.9152 16.5348 25.3492 16.9688 25.8842 16.9688H28.6542C29.1902 16.9688 29.6242 16.5348 29.6242 15.9998C29.6242 15.4648 29.1902 15.0298 28.6542 15.0298" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M22.9896 9.97995C23.2376 9.97995 23.4856 9.88495 23.6756 9.69595L24.7036 8.66795C25.0816 8.28995 25.0816 7.67495 24.7036 7.29595C24.3246 6.91795 23.7106 6.91795 23.3316 7.29595L22.3036 8.32495C21.9256 8.70295 21.9256 9.31695 22.3036 9.69595C22.4926 9.88495 22.7416 9.97995 22.9896 9.97995" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M8.32507 9.69593C8.51407 9.88493 8.76207 9.97993 9.01107 9.97993C9.25907 9.97993 9.50707 9.88493 9.69607 9.69593C10.0751 9.31693 10.0751 8.70293 9.69607 8.32493L8.66807 7.29693C8.28907 6.91893 7.67507 6.91893 7.29707 7.29693C6.91807 7.67493 6.91807 8.28993 7.29707 8.66793L8.32507 9.69593Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M8.32507 22.3043L7.29707 23.3313C6.91807 23.7093 6.91807 24.3243 7.29707 24.7023C7.48607 24.8923 7.73407 24.9873 7.98207 24.9873C8.23007 24.9873 8.47807 24.8923 8.66807 24.7023L9.69607 23.6753C10.0751 23.2973 10.0751 22.6833 9.69607 22.3043C9.31807 21.9253 8.70307 21.9253 8.32507 22.3043" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M23.6752 22.3043C23.2962 21.9253 22.6822 21.9253 22.3032 22.3043C21.9252 22.6833 21.9252 23.2973 22.3042 23.6753L23.3322 24.7023C23.5212 24.8923 23.7692 24.9873 24.0182 24.9873C24.2662 24.9873 24.5142 24.8923 24.7032 24.7023C25.0822 24.3243 25.0822 23.7093 24.7032 23.3313L23.6752 22.3043Z" fill="currentColor"></path></svg></span><span class="absolute inset-0 transform transition-transform duration-700 motion-reduce:duration-[0s] translate-y-10" style="transform-origin:50% 100px">
+                --><svg width="32" height="32" fill="none" viewBox="0 0 24 24"><path d="M5.75 5.75a1 1 0 011-1h10.5a1 1 0 011 1v8.5H5.75v-8.5zM18.25 14.5l.746 3.544a1 1 0 01-.979 1.206H5.982a1 1 0 01-.978-1.206L5.75 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </div>
-            <header>
-                <div class="block">
-                    <div class="image">
-                        <img style="aspect-ratio: 1 / 1;" class="motion-safe:animate-hero-image-reveal h-auto w-full object-contain max-h-[50vh]" alt="Illustration of a onewheel" sizes="(max-width: 1023px) 80vw, (min-width: 1024px) and (max-width: 1279px) 50vw, (min-width: 1280px) 900px" crossorigin="anonymous" srcset="https://res.cloudinary.com/kentcdodds-com/image/upload/w_256,q_auto,f_auto/kentcdodds.com/illustrations/one_wheel 256w, https://res.cloudinary.com/kentcdodds-com/image/upload/w_550,q_auto,f_auto/kentcdodds.com/illustrations/one_wheel 550w, https://res.cloudinary.com/kentcdodds-com/image/upload/w_700,q_auto,f_auto/kentcdodds.com/illustrations/one_wheel 700w, https://res.cloudinary.com/kentcdodds-com/image/upload/w_900,q_auto,f_auto/kentcdodds.com/illustrations/one_wheel 900w, https://res.cloudinary.com/kentcdodds-com/image/upload/w_1300,q_auto,f_auto/kentcdodds.com/illustrations/one_wheel 1300w, https://res.cloudinary.com/kentcdodds-com/image/upload/w_1800,q_auto,f_auto/kentcdodds.com/illustrations/one_wheel 1800w" src="https://res.cloudinary.com/kentcdodds-com/image/upload/w_918,q_auto,f_auto/kentcdodds.com/illustrations/one_wheel">
-                    </div>
-                    <div class="text">
-                        <h1>Hi, It's <font color="#36a3ff">Olavo Silva</font></h1>
-                        <h2>I'am a <font color="#36a3ff">Full Stack</font></h2>
+        </button>
+    </div>
+  </div>
+</nav>
 
-                        <p>
-                            Creating modern web experiences with React, Node.js and scalable backend solutions.
-                        </p>
-                    </div>
-                </div>
-            </header>
-        </div>
-    </body>
+<!-- HERO -->
+<div class="hero" id="sobre">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div style="max-width:1100px;margin:0 auto;width:100%;position:relative;z-index:1;">
+    <p class="hero-tag">// Engenharia de Software · UFC</p>
+    <h1>
+      <div class="name">Olavo<span class="line2">Silva</span><br></div>
+      <span class="accent">Full-Stack.</span>
+    </h1>
+    <p class="hero-desc">
+      Desenvolvedor Full Stack com experiência em Node.js, React, TypeScript e Firebase.
+      Apaixonado por arquiteturas escaláveis, clean code e produtos que resolvem problemas reais.
+    </p>
+    <div class="hero-cta">
+      <a href="#contato" class="btn btn-primary">Entrar em contato</a>
+      <a href="https://github.com/zOlavoPYT" target="_blank" class="btn btn-outline">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/olavo-silva-9a7620231/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <span class="stat-num">4+</span>
+        <span class="stat-label">Anos de experiência</span>
+      </div>
+      <div>
+        <span class="stat-num">3</span>
+        <span class="stat-label">Empresas / startups</span>
+      </div>
+      <div>
+        <span class="stat-num">2°</span>
+        <span class="stat-label">StartUp NE SEBRAE 2025</span>
+      </div>
+      <div>
+        <span class="stat-num">3°</span>
+        <span class="stat-label">SEBRAE Developers 2021</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIÊNCIA -->
+<section id="experiencia">
+  <p class="section-label reveal">// experiência profissional</p>
+  <h2 class="section-title reveal">O que já <span style="color:var(--accent)">construí.</span></h2>
+
+  <div class="timeline">
+
+    <div class="exp-item reveal">
+      <div class="exp-header">
+        <span class="exp-role">Desenvolvedor Full Stack</span>
+        <span class="exp-year">2025 – 2026</span>
+      </div>
+      <div class="exp-company">Startup Palma Brasil</div>
+      <ul class="exp-list">
+        <li>Desenvolvimento full stack da plataforma web, da prototipação até a implementação.</li>
+        <li>Interfaces modernas e responsivas com Vite e TypeScript.</li>
+        <li>APIs e serviços backend com Node.js — autenticação, regras de negócio e integração.</li>
+        <li>Modelagem e gerenciamento de banco de dados MySQL com estruturas otimizadas.</li>
+        <li>Documentação técnica, arquitetura e clean code com foco em escalabilidade.</li>
+      </ul>
+      <span class="badge-award">🏆 2° lugar — StartUp NE 2025 SEBRAE · +200 projetos</span>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-header">
+        <span class="exp-role">Desenvolvedor Back-End</span>
+        <span class="exp-year">2024</span>
+      </div>
+      <div class="exp-company">NEMO UFC</div>
+      <ul class="exp-list">
+        <li>Desenvolvimento backend e integração de sistemas para o portal de notícias do núcleo.</li>
+        <li>APIs em Node.js para gerenciamento e publicação de conteúdos.</li>
+        <li>Integração com Firebase: autenticação, banco de dados e armazenamento.</li>
+        <li>Endpoints e regras de negócio para notícias, usuários e fluxo de publicação.</li>
+        <li>Melhorias de desempenho, organização e segurança básica da aplicação.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-header">
+        <span class="exp-role">Desenvolvedor Full Stack</span>
+        <span class="exp-year">2022 – 2023</span>
+      </div>
+      <div class="exp-company">A.V.E Solução em Software</div>
+      <ul class="exp-list">
+        <li>Aplicações mobile Android e iOS com Expo, React Native e TypeScript.</li>
+        <li>Integração com Firebase: autenticação, real-time DB, storage e notificações.</li>
+        <li>APIs backend com Node.js, modelagem de rotas e regras de negócio.</li>
+        <li>Apps nativos Android com Android Studio e Java.</li>
+        <li>Todo o ciclo: requisitos, desenvolvimento, testes e publicação nas lojas.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-header">
+        <span class="exp-role">GameDev / Game Designer</span>
+        <span class="exp-year">2021 – 2022</span>
+      </div>
+      <div class="exp-company">Startup TeamMachine · Unity / C#</div>
+      <ul class="exp-list">
+        <li>Desenvolvimento completo de jogo em Unity e C#, da prototipação às mecânicas finais.</li>
+        <li>Sistemas de gameplay, gerenciamento de estados e movimentação de personagens.</li>
+        <li>Arquitetura orientada a objetos, clean code e reutilização de componentes.</li>
+      </ul>
+      <span class="badge-award">🥉 3° lugar — Sebrae Developers 2021</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label reveal">// hard skills</p>
+  <h2 class="section-title reveal">Com o que <span style="color:var(--accent)">trabalho.</span></h2>
+  <div class="skills-grid">
+
+    <div class="skill-group reveal">
+      <p class="skill-group-title">Front-end</p>
+      <div class="skill-tags">
+        <span class="skill-tag">React</span>
+        <span class="skill-tag">Vite</span>
+        <span class="skill-tag">TypeScript</span>
+        <span class="skill-tag">JavaScript ES6+</span>
+        <span class="skill-tag">HTML5</span>
+        <span class="skill-tag">CSS3</span>
+        <span class="skill-tag">React Native</span>
+        <span class="skill-tag">Expo</span>
+      </div>
+    </div>
+
+    <div class="skill-group reveal">
+      <p class="skill-group-title">Back-end</p>
+      <div class="skill-tags">
+        <span class="skill-tag">Node.js</span>
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">Spring Boot</span>
+        <span class="skill-tag">APIs REST</span>
+        <span class="skill-tag">Arquitetura Full Stack</span>
+      </div>
+    </div>
+
+    <div class="skill-group reveal">
+      <p class="skill-group-title">Banco de Dados</p>
+      <div class="skill-tags">
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">Modelagem Relacional</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">Firebase Firestore</span>
+      </div>
+    </div>
+
+    <div class="skill-group reveal">
+      <p class="skill-group-title">Mobile</p>
+      <div class="skill-tags">
+        <span class="skill-tag">React Native</span>
+        <span class="skill-tag">Expo Go</span>
+        <span class="skill-tag">Android / iOS</span>
+        <span class="skill-tag">Android Studio</span>
+        <span class="skill-tag">Java</span>
+      </div>
+    </div>
+
+    <div class="skill-group reveal">
+      <p class="skill-group-title">Outras Tecnologias</p>
+      <div class="skill-tags">
+        <span class="skill-tag">Git / GitHub</span>
+        <span class="skill-tag">Firebase Auth</span>
+        <span class="skill-tag">Firebase Storage</span>
+        <span class="skill-tag">Clean Code</span>
+        <span class="skill-tag">POO</span>
+        <span class="skill-tag">Performance</span>
+        <span class="skill-tag">Unity / C#</span>
+      </div>
+    </div>
+
+    <div class="skill-group reveal">
+      <p class="skill-group-title">Formação</p>
+      <div class="skill-tags">
+        <span class="skill-tag">Eng. de Software · UFC</span>
+        <span class="skill-tag">2022 – atual</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJETOS -->
+<section id="projetos">
+  <p class="section-label reveal">// portfólio</p>
+  <h2 class="section-title reveal">Sites <span style="color:var(--accent)">Desenvolvidos.</span></h2>
+  
+  <div class="certs-grid">
+    <a href="https://descompliqueconcursos.com/" target="_blank" style="text-decoration:none; color:inherit;">
+      <div class="cert-card reveal">
+        <div class="cert-icon">🌐</div>
+        <div class="cert-title" style="margin-bottom:0.5rem;">Descomplique Concursos</div>
+        <div class="cert-meta">Site educacional focado em facilitar estudos e preparações para concursos públicos.</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- CERTS -->
+<section id="certs">
+  <p class="section-label reveal">// certificações & conquistas</p>
+  <h2 class="section-title reveal">Prêmios &amp; <span style="color:var(--accent)">Certs.</span></h2>
+  <div class="certs-grid">
+
+    <div class="cert-card reveal">
+      <div class="cert-icon">🏆</div>
+      <div class="cert-title">2° Lugar — StartUp NE 2025</div>
+      <div class="cert-meta">SEBRAE · +200 projetos inscritos</div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-icon">🥉</div>
+      <div class="cert-title">3° Lugar — Sebrae Developers 2021</div>
+      <div class="cert-meta">Competição nacional de desenvolvimento</div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-icon">📜</div>
+      <div class="cert-title">Certificado Full Stack · 181h</div>
+      <div class="cert-meta">Rocketseat · Set / 2025</div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-icon">📜</div>
+      <div class="cert-title">Certificado Backend Node.js · 60h</div>
+      <div class="cert-meta">Rocketseat · Jun / 2025</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTATO -->
+<div class="contact-section" id="contato">
+  <p class="section-label" style="display:block;text-align:center;margin-bottom:.5rem;">// vamos conversar</p>
+  <h2 class="section-title">Entre em <span style="color:var(--accent)">contato.</span></h2>
+  <p style="color:var(--muted);margin-top:1rem;font-size:1.5rem;max-width:400px;margin-inline:auto;line-height:1.7;font-weight:500;">
+    Aberto a novas oportunidades, projetos freelance e colaborações. Fale comigo!
+  </p>
+  <div class="contact-links">
+    <a href="mailto:as8848641@gmail.com" class="btn btn-primary">as8848641@gmail.com</a>
+    <a href="tel:+5588988436788" class="btn btn-outline">(88) 98843-6788</a>
+    <a href="https://www.linkedin.com/in/olavo-silva-9a7620231/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+    <a href="https://github.com/zOlavoPYT" target="_blank" class="btn btn-outline">GitHub ↗</a>
+  </div>
+</div>
+
+<footer>
+  <span>© 2026 Francisco Olavo do Nascimento Silva Melo</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Close mobile menu on link click
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.querySelector('.nav-links').classList.remove('open');
+    });
+  });
+</script>
+</body>
 </html>
